@@ -13,10 +13,15 @@ import ShoppingAccount from "./pages/shopping-view/Account"
 import ShoppingCheckout from "./pages/shopping-view/Checkout"
 import ShoppingHome from "./pages/shopping-view/Home"
 import ShopingListing from "./pages/shopping-view/Listing"
+import CheckAuth from "./components/common/check-auth"
 
 
 
 function App() {
+
+  //demo authenticated 
+  const isAuthenticated = false;
+  const user = null;
 
 
   return (
@@ -24,13 +29,23 @@ function App() {
 
       {/* AuthLayout */}
       <Routes>
-        <Route path="/auth" element={<AuthLayout />}>
+
+        {/* checkout authlayout authentication method */}
+        <Route path="/auth" element={
+          <CheckAuth>
+            <AuthLayout isAuthenticated={isAuthenticated} user={user} />
+          </CheckAuth>
+        }>
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
 
         </Route>
+
+
         {/* AdminLayout */}
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route path="/admin" element={<CheckAuth>
+          <AdminLayout isAuthenticated={isAuthenticated} user={user} />
+        </CheckAuth>}>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="feature" element={<AdminFeature />} />
           <Route path="order" element={<AdminOrder />} />
@@ -39,7 +54,11 @@ function App() {
         </Route>
 
         {/* shoppingLayout */}
-        <Route path="/shop" element={<ShoppingLayout />}>
+        <Route path="/shop" element={
+          <CheckAuth>
+            <ShoppingLayout isAuthenticated={isAuthenticated} user={user} />
+          </CheckAuth>
+        }>
           <Route path="account" element={<ShoppingAccount />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="home" element={<ShoppingHome />} />
