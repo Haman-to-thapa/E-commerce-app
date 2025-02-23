@@ -14,15 +14,16 @@ import ShoppingCheckout from "./pages/shopping-view/Checkout"
 import ShoppingHome from "./pages/shopping-view/Home"
 import ShopingListing from "./pages/shopping-view/Listing"
 import CheckAuth from "./components/common/check-auth"
+import UnauthPage from "./pages/unauth-page/indix"
+
+
 
 
 
 function App() {
 
-  //demo authenticated 
   const isAuthenticated = false;
   const user = null;
-
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
@@ -32,8 +33,8 @@ function App() {
 
         {/* checkout authlayout authentication method */}
         <Route path="/auth" element={
-          <CheckAuth>
-            <AuthLayout isAuthenticated={isAuthenticated} user={user} />
+          <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            <AuthLayout />
           </CheckAuth>
         }>
           <Route path="login" element={<AuthLogin />} />
@@ -43,9 +44,11 @@ function App() {
 
 
         {/* AdminLayout */}
-        <Route path="/admin" element={<CheckAuth>
-          <AdminLayout isAuthenticated={isAuthenticated} user={user} />
-        </CheckAuth>}>
+        <Route path="/admin" element={
+          <CheckAuth isAuthenticated={isAuthenticated} user={user} >
+            <AdminLayout />
+          </CheckAuth>
+        }>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="feature" element={<AdminFeature />} />
           <Route path="order" element={<AdminOrder />} />
@@ -55,8 +58,8 @@ function App() {
 
         {/* shoppingLayout */}
         <Route path="/shop" element={
-          <CheckAuth>
-            <ShoppingLayout isAuthenticated={isAuthenticated} user={user} />
+          <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            <ShoppingLayout />
           </CheckAuth>
         }>
           <Route path="account" element={<ShoppingAccount />} />
@@ -67,6 +70,7 @@ function App() {
         </Route>
 
         {/* Page not found elements */}
+        <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
 
       </Routes>
