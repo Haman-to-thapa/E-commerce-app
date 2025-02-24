@@ -1,11 +1,12 @@
 import express from 'express'
-import { registerUser } from '../../controllers/auth/auth-controllers.js'
+import { authLogin, registerUser } from '../../controllers/auth/auth-controllers.js'
 
 const authRouter = express.Router()
 
 
 
 authRouter.post('/register', registerUser)
+authRouter.post('/login', authLogin)
 
 
 
