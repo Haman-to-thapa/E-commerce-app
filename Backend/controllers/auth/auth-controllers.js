@@ -79,10 +79,33 @@ const authLogin = async (req, res) => {
 
 // logout
 
-const logout = (req, res) => {
-  res.ClearCookie('token').json({success:true, message:"logged out successfully"})
+const logoutUser = (req, res) => {
+  res.clearCookie('token');
+  res.json({success:true, message:"logged out successfully"})
+}
+
+
+// auth  Middleware : 
+const authMiddleware = async (req, res, next) => {
+  const token = req.cookies.token;
+
+  if(!token) {
+    return res.status(401).json({success:false, message:"Unathorized user token"})
+  }
+  try {
+    
+    const decoded = jwt.verify(token,"CLIENT_SECRET_KEY");
+    req.user = decoded;
+
+    next()
+
+  } catch (error) {
+    console.log(error)
+    res.status(401).json({success:false, message:error.message})
+  }
 }
 
 
 
-export {registerUser, authLogin, logout}
+
+export {registerUser, authLogin, logoutUser, authMiddleware}
