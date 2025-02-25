@@ -5,6 +5,7 @@ const CheckAuth = ({ isAuthenticated, user, children }) => {
 
   const location = useLocation()
 
+
   //checking there not direct enter to without login page
   if (!isAuthenticated &&
     !(location.pathname.includes('/login') ||
